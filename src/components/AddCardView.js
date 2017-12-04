@@ -55,21 +55,27 @@ class CardView extends Component {
       <Container>
         <Content>
           <Form>
-            <Item error={error}>
+            <Item error={error && this.state.question.length === 0}>
               <Input
                 placeholder="Question"
                 value={this.state.question}
                 onChangeText={question => this.setState({ question })}
+                onFocus={() => this.setState({ error: false })}
               />
-              {error && <Icon name="close-circle" />}
+              {error &&
+                this.state.question.length === 0 && (
+                  <Icon name="close-circle" />
+                )}
             </Item>
-            <Item error={error}>
+            <Item error={error && this.state.answer.length === 0}>
               <Input
                 placeholder="Answer"
                 value={this.state.answer}
                 onChangeText={answer => this.setState({ answer })}
+                onFocus={() => this.setState({ error: false })}
               />
-              {error && <Icon name="close-circle" />}
+              {error &&
+                this.state.answer.length === 0 && <Icon name="close-circle" />}
             </Item>
           </Form>
           <CustomButton

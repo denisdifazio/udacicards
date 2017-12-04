@@ -19,7 +19,7 @@ class QuizView extends Component {
     const card = flashcards[this.state.questionIndex];
     return (
       <View style={styles.container}>
-        <Text style={styles.questionIndex}>{`${this.state.questionIndex}/${
+        <Text style={styles.questionIndex}>{`${this.state.questionIndex + 1}/${
           flashcards.length
         }`}</Text>
         <View style={styles.questionContainer}>
