@@ -14,6 +14,7 @@ import { submitDeck } from "../utils/persistence";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
+import CustomButton from "./CustomButton";
 
 class NewDeckView extends Component {
   state = { text: "", error: false };
@@ -23,7 +24,11 @@ class NewDeckView extends Component {
   };
 
   submit = () => {
-    const error = this.state.text.length === 0;
+    const filteredDecks = this.props.decks.filter(
+      deck => deck.name === this.state.text
+    );
+
+    const error = this.state.text.length === 0 || filteredDecks.length > 0;
 
     this.setState({
       error
@@ -59,17 +64,23 @@ class NewDeckView extends Component {
                 placeholder="New Deck"
                 value={this.state.text}
                 onChangeText={text => this.setState({ text })}
+                onFocus={() => this.setState({ error: false })}
               />
               {error && <Icon name="close-circle" />}
             </Item>
+            {error && (
+              <Label style={{ margin: 15, marginTop: 5, color: "red" }}>
+                {this.state.text.length === 0
+                  ? "This field is required"
+                  : "A deck with this name already exists"}
+              </Label>
+            )}
           </Form>
-          <Button
-            block
+          <CustomButton
+            buttonStyle={{ alignSelf: "center" }}
             onPress={() => this.submit()}
-            style={{ margin: 15, marginTop: 50 }}
-          >
-            <Text>Submit</Text>
-          </Button>
+            title="Submit"
+          />
         </Content>
       </Container>
     );

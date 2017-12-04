@@ -9,7 +9,14 @@ class Deck extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => this.props.navigation.navigate("DeckView")}
+          onPress={() =>
+            this.props.navigation.navigate("DeckView", {
+              deck: {
+                name: this.props.name,
+                flashcards: this.props.flashcards
+              }
+            })
+          }
         >
           <Text style={styles.titleText}>{this.props.name}</Text>
           <Text>{`${this.props.flashcards.length} cards`}</Text>
