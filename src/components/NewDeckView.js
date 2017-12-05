@@ -10,7 +10,6 @@ import {
   Label,
   Icon
 } from "native-base";
-import { submitDeck } from "../utils/persistence";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
@@ -91,8 +90,4 @@ const mapStateToProps = state => ({
   decks: state.decks
 });
 
-const mapDispatchToProps = dispatch => ({
-  submitDeck: deck => dispatch(addDeck(deck))
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewDeckView);
+export default connect(mapStateToProps)(NewDeckView);

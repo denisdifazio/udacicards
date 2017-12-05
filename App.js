@@ -3,7 +3,10 @@ import { StyleSheet, View } from "react-native";
 import CustomStatusBar from "./src/components/CustomStatusBar";
 import CustomStackNavigator from "./src/components/CustomStackNavigator";
 import { Provider } from "react-redux";
-import store from "./src/store";
+import configureStore from "./src/store";
+import { PersistGate } from "redux-persist/es/integration/react";
+
+const { persistor, store } = configureStore();
 
 export default class App extends React.Component {
   state = {
@@ -27,10 +30,12 @@ export default class App extends React.Component {
 
     return (
       <Provider store={store}>
-        <View style={styles.container}>
-          <CustomStatusBar backgroundColor="navy" barStyle="light-content" />
-          <CustomStackNavigator />
-        </View>
+        <PersistGate persistor={persistor}>
+          <View style={styles.container}>
+            <CustomStatusBar backgroundColor="navy" barStyle="light-content" />
+            <CustomStackNavigator />
+          </View>
+        </PersistGate>
       </Provider>
     );
   }
