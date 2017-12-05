@@ -90,4 +90,8 @@ const mapStateToProps = state => ({
   decks: state.decks
 });
 
-export default connect(mapStateToProps)(NewDeckView);
+const mapDispatchToProps = dispatch => ({
+  submitDeck: deck => dispatch(addDeck(deck))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewDeckView);

@@ -28,3 +28,4 @@ This mobile application made use of various packages listed below:
 * [react-redux](https://github.com/reactjs/react-redux)
 * [redux-persist](https://github.com/rt2zz/redux-persist)
 * [native-base](https://github.com/GeekyAnts/NativeBase)
+* [native-navigation](https://github.com/react-community/react-navigation)

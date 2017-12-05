@@ -28,7 +28,11 @@ class Deck extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    height: 100
+    height: 100,
+    borderBottomWidth: 1,
+    borderBottomColor: "navy",
+    marginLeft: 15,
+    marginRight: 15
   },
   button: {
     flex: 1,
