@@ -59,12 +59,38 @@ class QuizView extends Component {
     });
   };
 
-  render() {
-    const { name, flashcards } = this.props.navigation.state.params.deck;
-    const card = flashcards[this.state.questionIndex];
-    const { showingAnswer, questionIndex, correctAnswers } = this.state;
+  showScore = () => {
+    const { flashcards } = this.props.navigation.state.params.deck;
+    const { correctAnswers } = this.state;
 
-    return questionIndex < flashcards.length ? (
+    return (
+      <View style={styles.container}>
+        <View style={styles.scoreContainer}>
+          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Score</Text>
+          <Animated.Text
+            style={{ fontSize: this.state.size, fontWeight: "bold" }}
+          >
+            {correctAnswers / flashcards.length * 100}%
+          </Animated.Text>
+        </View>
+
+        <CustomButton title="Restart Quiz" onPress={() => this.restartQuiz()} />
+        <CustomButton
+          title="Back"
+          onPress={() =>
+            this.props.navigation.dispatch(NavigationActions.back())
+          }
+        />
+      </View>
+    );
+  };
+
+  showQuiz = () => {
+    const { flashcards } = this.props.navigation.state.params.deck;
+    const card = flashcards[this.state.questionIndex];
+    const { showingAnswer, questionIndex } = this.state;
+
+    return (
       <View style={styles.container}>
         <Text style={styles.questionIndex}>{`${questionIndex + 1}/${
           flashcards.length
@@ -98,26 +124,16 @@ class QuizView extends Component {
           </Text>
         </TouchableOpacity>
       </View>
-    ) : (
-      <View style={styles.container}>
-        <View style={styles.scoreContainer}>
-          <Text style={{ fontSize: 20, fontWeight: "bold" }}>Score</Text>
-          <Animated.Text
-            style={{ fontSize: this.state.size, fontWeight: "bold" }}
-          >
-            {correctAnswers / flashcards.length * 100}%
-          </Animated.Text>
-        </View>
-
-        <CustomButton title="Restart Quiz" onPress={() => this.restartQuiz()} />
-        <CustomButton
-          title="Back"
-          onPress={() =>
-            this.props.navigation.dispatch(NavigationActions.back())
-          }
-        />
-      </View>
     );
+  };
+
+  render() {
+    const { flashcards } = this.props.navigation.state.params.deck;
+    const { questionIndex } = this.state;
+
+    return questionIndex < flashcards.length
+      ? this.showQuiz()
+      : this.showScore();
   }
 }
 

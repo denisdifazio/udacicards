@@ -10,6 +10,7 @@ import {
   Label,
   Icon
 } from "native-base";
+import { KeyboardAvoidingView, StyleSheet } from "react-native";
 import { NavigationActions } from "react-navigation";
 import { connect } from "react-redux";
 import { addDeck } from "../actions";
@@ -36,59 +37,66 @@ class NewDeckView extends Component {
     if (!error) {
       this.props.submitDeck(this.state.text);
       this.setState({ text: "" });
-      this.toHome();
+      this.toDeckView();
     }
   };
 
-  toHome = () => {
-    this.props.navigation.dispatch(
-      NavigationActions.navigate({
-        routeName: "Decks"
-      })
-    );
+  toDeckView = () => {
+    this.props.navigation.navigate("DeckView", {
+      deck: {
+        name: this.state.text,
+        flashcards: []
+      }
+    });
   };
 
   render() {
     const { error } = this.state;
 
     return (
-      <Container>
-        <Content>
-          <Label style={{ margin: 15, marginTop: 15 }}>
-            What is the title of your new deck?
-          </Label>
-          <Form>
-            <Item error={error}>
-              <Input
-                placeholder="New Deck"
-                value={this.state.text}
-                onChangeText={text => this.setState({ text })}
-                onFocus={() => this.setState({ error: false })}
-              />
-              {error && <Icon name="close-circle" />}
-            </Item>
-            {error && (
-              <Label style={{ margin: 15, marginTop: 5, color: "red" }}>
-                {this.state.text.length === 0
-                  ? "This field is required"
-                  : "A deck with this name already exists"}
-              </Label>
-            )}
-          </Form>
-          <CustomButton
-            buttonStyle={{ alignSelf: "center" }}
-            onPress={() => this.submit()}
-            title="Submit"
-          />
-        </Content>
-      </Container>
+      <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <Container>
+          <Content>
+            <Label style={{ margin: 15, marginTop: 15 }}>
+              What is the title of your new deck?
+            </Label>
+            <Form>
+              <Item error={error}>
+                <Input
+                  placeholder="New Deck"
+                  value={this.state.text}
+                  onChangeText={text => this.setState({ text })}
+                  onFocus={() => this.setState({ error: false })}
+                />
+                {error && <Icon name="close-circle" />}
+              </Item>
+              {error && (
+                <Label style={{ margin: 15, marginTop: 5, color: "red" }}>
+                  {this.state.text.length === 0
+                    ? "This field is required"
+                    : "A deck with this name already exists"}
+                </Label>
+              )}
+            </Form>
+            <CustomButton
+              buttonStyle={{ alignSelf: "center" }}
+              onPress={() => this.submit()}
+              title="Submit"
+            />
+          </Content>
+        </Container>
+      </KeyboardAvoidingView>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  decks: state.decks
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
 });
+
+const mapStateToProps = ({ decks }) => ({ decks });
 
 const mapDispatchToProps = dispatch => ({
   submitDeck: deck => dispatch(addDeck(deck))

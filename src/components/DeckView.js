@@ -25,7 +25,9 @@ class DeckView extends Component {
   };
 
   render() {
-    const { name, flashcards } = this.props.navigation.state.params.deck;
+    const { name, flashcards } = this.props.decks.find(
+      deck => deck.name === this.props.navigation.state.params.deck.name
+    );
     return (
       <View style={styles.container}>
         <View style={styles.deckInformationContainer}>
@@ -64,8 +66,6 @@ const styles = StyleSheet.create({
   }
 });
 
-const mapStateToProps = (state, ownProps) => ({
-  decks: state.decks
-});
+const mapStateToProps = ({ decks }) => ({ decks });
 
 export default connect(mapStateToProps)(DeckView);

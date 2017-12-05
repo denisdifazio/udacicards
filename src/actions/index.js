@@ -1,5 +1,4 @@
-export const ADD_DECK = "ADD_DECK";
-export const ADD_CARD = "ADD_CARD";
+import { ADD_DECK, ADD_CARD } from "./types";
 
 export function addDeck(deck) {
   return {
