@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Animated,
-  Easing
+  Easing,
+  Platform
 } from "react-native";
 import CustomButton from "./CustomButton";
 import { NavigationActions } from "react-navigation";
@@ -80,11 +81,22 @@ class QuizView extends Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <CustomButton title="Correct" onPress={() => this.submitAnswer(true)} />
-        <CustomButton
-          title="Incorrect"
+        <TouchableOpacity
+          style={styles.correctButton}
+          onPress={() => this.submitAnswer(true)}
+        >
+          <Text style={styles.correctText}>
+            {Platform.OS === "android" ? "CORRECT" : "Correct"}
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.incorrectButton}
           onPress={() => this.submitAnswer(false)}
-        />
+        >
+          <Text style={styles.incorrectText}>
+            {Platform.OS === "android" ? "INCORRECT" : "Incorrect"}
+          </Text>
+        </TouchableOpacity>
       </View>
     ) : (
       <View style={styles.container}>
@@ -133,6 +145,62 @@ const styles = StyleSheet.create({
     height: 300,
     justifyContent: "center",
     alignItems: "center"
+  },
+  correctButton: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: "white"
+      },
+      android: {
+        elevation: 4,
+        borderRadius: 2,
+        backgroundColor: "green"
+      }
+    }),
+    height: 50,
+    width: 150,
+    marginTop: 15,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  correctText: {
+    ...Platform.select({
+      ios: {
+        color: "green"
+      },
+      android: {
+        color: "white",
+        fontWeight: "500"
+      }
+    })
+  },
+  incorrectButton: {
+    ...Platform.select({
+      ios: {
+        backgroundColor: "white"
+      },
+      android: {
+        elevation: 4,
+        borderRadius: 2,
+        backgroundColor: "red"
+      }
+    }),
+    height: 50,
+    width: 150,
+    marginTop: 15,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  incorrectText: {
+    ...Platform.select({
+      ios: {
+        color: "red"
+      },
+      android: {
+        color: "white",
+        fontWeight: "500"
+      }
+    })
   }
 });
 
