@@ -2,6 +2,7 @@
 
 * [Introduction](#introduction)
 * [Instalation](#installation)
+* [Tests](#tests)
 * [Development](#development)
 
 ## Introduction
@@ -16,8 +17,21 @@ application including handling infinite lists, routing, and user input.
 
 ## Installation
 
-* `npm install`
-* `npm start`
+To run this project, you will need [NodeJS](https://nodejs.org/en/) installed in
+your machine. Furthermore, you will also need [Expo](https://expo.io/) installed
+in your device. After that, just clone the repository and run the following
+commands in your command shell at the repository directory:
+
+* `npm install` or `yarn install`
+* `npm start` or `yarn start`
+
+Wait for an QRCode to show on the terminal then use it in you Expo App option
+`Scan QR Code`.
+
+## Tests
+
+This app was tested on a Lenovo A7010a48 (Android 6.0) and a Apple iPhone 5S
+(iOS).
 
 ## Development
 
